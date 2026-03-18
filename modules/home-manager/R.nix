@@ -25,6 +25,7 @@
       argparse
       rPackages.IRkernel
       shinyBS
+      faraway
       reactlog
       rlang
       viridis
