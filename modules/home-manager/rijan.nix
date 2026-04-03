@@ -174,6 +174,7 @@
     nix-update
     affine
     antigravity-fhs
+    vscodium-fhs
 
     #window manager
     sway

@@ -10,6 +10,7 @@
 , fontconfig
 , glib
 , gtk3
+, gsettings-desktop-schemas
 , libGL
 , alsa-lib
 }:
@@ -76,7 +77,9 @@ stdenv.mkDerivation {
         libGL
         alsa-lib
       ]}" \
-      --set MZMINE_HOME "$out/opt/mzmine"
+      --set MZMINE_HOME "$out/opt/mzmine" \
+      --prefix XDG_DATA_DIRS : "${gtk3}/share/gsettings-schemas/${gtk3.name}" \
+      --prefix XDG_DATA_DIRS : "${gsettings-desktop-schemas}/share/gsettings-schemas/${gsettings-desktop-schemas.name}"
 
     cat > $out/share/applications/mzmine.desktop <<EOF
     [Desktop Entry]

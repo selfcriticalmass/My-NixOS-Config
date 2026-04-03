@@ -27,6 +27,8 @@
       shinyBS
       faraway
       reactlog
+      leaps
+      GA
       rlang
       viridis
       svglite
