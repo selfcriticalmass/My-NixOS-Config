@@ -84,6 +84,8 @@
     racket
     gccgo13
     nim
+    xonsh
+    asciidoctor-with-extensions
     nimble
     nimlangserver
     julia
@@ -119,7 +121,7 @@
     backblaze-b2
     inetutils
     mosh
-    nodePackages_latest.wrangler
+    wrangler
     openconnect
     protonvpn-gui
     rclone

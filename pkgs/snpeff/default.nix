@@ -6,7 +6,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://snpeff-public.s3.amazonaws.com/versions/snpEff_latest_core.zip";
-    sha256 = "0alalxyn7fal41xs0ygdsj9xinrn9qf781qqq0cjq31h02zx4sjg";
+    sha256 = "0cyz1bqfj7qv2qwkzmkjsjky1lfkq64g11rk8gayprrrz7hs21iv";
   };
 
   nativeBuildInputs = [ unzip makeWrapper ];
