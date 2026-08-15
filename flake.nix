@@ -23,12 +23,25 @@
         snpeff             = final.callPackage ./pkgs/snpeff/default.nix { };
         edge-tts           = final.callPackage ./pkgs/edge-tts/default.nix { };
         ferrite            = final.callPackage ./pkgs/ferrite/default.nix { };
+
+        pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+          (python-final: python-prev: {
+            python-lsp-ruff = python-prev.python-lsp-ruff.overridePythonAttrs (_: {
+              doCheck = false;
+            });
+          })
+        ];
       };
 
       pkgs = import nixpkgs {
         inherit system;
         overlays = [ customOverlay ];
-        config.allowUnfree = true;
+        config = {
+          allowUnfree = true;
+          permittedInsecurePackages = [
+            "electron-39.8.10"
+          ];
+        };
       };
 
     in
@@ -60,6 +73,9 @@
               overlays = [ customOverlay ];
               config = {
                 allowUnfree = true;
+                permittedInsecurePackages = [
+                  "electron-39.8.10"
+                ];
               };
             };
           })
@@ -67,6 +83,10 @@
           ./hardware-configuration.nix
           ./configuration.nix
           home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+          }
         ];
       };
     };

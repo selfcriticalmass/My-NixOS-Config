@@ -31,6 +31,7 @@
     # Browsers
     brave
     firefox
+    vivaldi
     tor-browser
 
     # Communication
@@ -122,6 +123,7 @@
     inetutils
     mosh
     wrangler
+    repomix
     openconnect
     protonvpn-gui
     rclone
@@ -157,7 +159,7 @@
     glibc
     jdk17
     libgcc
-    samba4Full
+    samba
     zlib
     zlib.dev
     mkdocs
@@ -175,7 +177,7 @@
 
     nix-update
     affine
-    antigravity-fhs
+    antigravity-ide-fhs
     vscodium-fhs
 
     #window manager
@@ -189,9 +191,7 @@
     enableFishIntegration = true;
   };
 
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
+
 
   fonts.fontconfig.enable = true;
 

@@ -33,9 +33,6 @@
   # Needed so Fish is added to /etc/shells
   programs.fish.enable = true;
 
-  # Required for Waydroid
-  services.xserver.displayManager.gdm.wayland = true;
-
   environment.systemPackages = with pkgs; [
     plink2
     mzmine
