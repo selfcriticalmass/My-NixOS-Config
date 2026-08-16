@@ -2,10 +2,12 @@
   description = "Rijan's NixOS Configuration Flake";
 
   inputs = {
-    # Don't use `follows = "nixpkgs"` here to maximize FlakeHub cache hits
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
-
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    # Deliberately NO `follows = "nixpkgs"` here. Determinate builds only the
+    # nix/nixd binaries (~200 MB) and is tested against its own pinned nixpkgs.
+    # Forcing it onto nixos-unstable breaks its bundled patchset (boost 1.89).
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -33,7 +35,7 @@
         ];
       };
 
-      pkgs = import nixpkgs {
+    pkgs = import nixpkgs {
         inherit system;
         overlays = [ customOverlay ];
         config = {
@@ -46,16 +48,6 @@
 
     in
     {
-      # Expose custom packages so nix-update --flake can find them
-      packages.${system} = {
-        inherit (pkgs)
-          plink2
-          mzmine
-          snpeff
-          edge-tts
-          ferrite;
-      };
-
       nixosConfigurations."nixos" = nixpkgs.lib.nixosSystem {
         inherit system;
 
@@ -88,6 +80,18 @@
             home-manager.useUserPackages = true;
           }
         ];
+      };
+
+      # Expose custom packages so nix-update --flake can find them.
+      # Independent import of the same nixpkgs rev, so derived store paths
+      # deduplicate with the system config's evaluation.
+      packages.${system} = {
+        inherit (pkgs)
+          plink2
+          mzmine
+          snpeff
+          edge-tts
+          ferrite;
       };
     };
 }
