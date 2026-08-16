@@ -14,7 +14,12 @@
 , fontconfig
 , freetype
 , libgit2
-, xorg
+, libX11
+, libXcursor
+, libXrandr
+, libXi
+, libxcb
+, libXScrnSaver
 }:
 
 rustPlatform.buildRustPackage rec {
@@ -47,12 +52,12 @@ rustPlatform.buildRustPackage rec {
     fontconfig
     freetype
     libgit2
-    xorg.libX11
-    xorg.libXcursor
-    xorg.libXrandr
-    xorg.libXi
-    xorg.libxcb
-    xorg.libXScrnSaver
+    libX11
+    libXcursor
+    libXrandr
+    libXi
+    libxcb
+    libXScrnSaver
   ];
 
   # Skip tests as they may require a display
@@ -77,11 +82,11 @@ rustPlatform.buildRustPackage rec {
         vulkan-loader
         wayland
         libxkbcommon
-        xorg.libX11
-        xorg.libXcursor
-        xorg.libXrandr
-        xorg.libXi
-        xorg.libxcb
+        libX11
+        libXcursor
+        libXrandr
+        libXi
+        libxcb
       ]}
   '';
 

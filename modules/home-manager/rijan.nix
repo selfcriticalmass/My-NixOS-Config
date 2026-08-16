@@ -22,7 +22,6 @@
     gh
 
     # Editors
-    emacs
     helix
     neovim
     opencode
@@ -144,6 +143,7 @@
     comma
     hugo
     mermaid-cli
+    imagemagick
     # ncurses  # Conflicts with ghostty's terminfo
     notcurses
     ollama
@@ -189,6 +189,16 @@
   programs.atuin = {
     enable = true;
     enableFishIntegration = true;
+  };
+
+  # Rijan: For emacs
+
+  programs.emacs = {
+    enable = true;
+    package = pkgs.emacs;
+    extraPackages = epkgs: with epkgs; [
+        org-roam
+    ];
   };
 
 

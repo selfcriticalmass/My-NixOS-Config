@@ -5,7 +5,11 @@
 , makeWrapper
 , autoPatchelfHook
 , zlib
-, xorg
+, libX11
+, libXext
+, libXtst
+, libXi
+, libXrender
 , freetype
 , fontconfig
 , glib
@@ -33,11 +37,11 @@ stdenv.mkDerivation {
   buildInputs = [
     stdenv.cc.cc.lib
     zlib
-    xorg.libX11
-    xorg.libXext
-    xorg.libXtst
-    xorg.libXi
-    xorg.libXrender
+    libX11
+    libXext
+    libXtst
+    libXi
+    libXrender
     freetype
     fontconfig
     glib
@@ -65,11 +69,11 @@ stdenv.mkDerivation {
       --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [
         stdenv.cc.cc.lib
         zlib
-        xorg.libX11
-        xorg.libXext
-        xorg.libXtst
-        xorg.libXi
-        xorg.libXrender
+        libX11
+        libXext
+        libXtst
+        libXi
+        libXrender
         freetype
         fontconfig
         glib
