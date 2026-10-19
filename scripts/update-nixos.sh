@@ -37,28 +37,38 @@ echo -e "${GREEN}NixOS Update${NC} — $(date)"
 echo -e "Flake:       ${FLAKE_DIR}"
 echo -e "Error log:   ${LOG_FILE}"
 
-step "1/4  Updating flake inputs"
+step "1/3  Updating flake inputs"
 if run nix flake update --flake "$FLAKE_DIR"; then
     ok "Flake lock updated"
+    chown "${SUDO_UID:-0}:${SUDO_GID:-0}" "$FLAKE_DIR/flake.lock" 2>/dev/null || true
 else
     fail "Flake update failed"
 fi
 
-step "2/4  Rebuilding NixOS (switch)"
+# `switch` already installs boot entries, so a separate `boot` rebuild is redundant.
+step "2/3  Rebuilding NixOS (switch)"
 if run nixos-rebuild switch --flake "${FLAKE_DIR}#nixos"; then
     ok "System rebuilt and switched"
 else
     fail "nixos-rebuild switch failed"
 fi
 
-step "3/4  Rebuilding boot entries"
-if run nixos-rebuild boot --flake "${FLAKE_DIR}#nixos"; then
-    ok "Boot entries updated"
-else
-    fail "nixos-rebuild boot failed"
-fi
+step "3/3  Garbage collection"
 
-step "4/4  Garbage collection"
+# Remove stale indirect GC roots left by ad-hoc `nix build --out-link` runs
+# (e.g. debugging links in /tmp, or ./result in the repo). These pin whole
+# closures that `nix-collect-garbage -d` alone can never remove.
+while IFS= read -r root; do
+    target="$(readlink "$root" 2>/dev/null || true)"
+    case "$target" in
+        /tmp/* | "$FLAKE_DIR"/result*)
+            if rm -f "$root" "$target"; then
+                ok "Pruned stale GC root: ${target}"
+            fi
+            ;;
+    esac
+done < <(find /nix/var/nix/gcroots/auto -type l 2>/dev/null)
+find /nix/var/nix/gcroots/auto -xtype l -delete 2>/dev/null || true
 
 if run nix-env --delete-generations old --profile /nix/var/nix/profiles/system; then
     ok "Old system generations deleted"

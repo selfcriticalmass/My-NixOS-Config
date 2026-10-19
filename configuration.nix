@@ -41,12 +41,11 @@
     ferrite
   ];
 
-  system.autoUpgrade = {
-    enable = true;
-    allowReboot = true;
-    flake = "github:Rijan2055/My-NixOS-Config#nixos";
-    dates = "04:00";
-  };
+  # system.autoUpgrade is intentionally disabled. It rebuilt from the flake
+  # as committed on GitHub, whose flake.lock lags behind this working tree,
+  # so it re-activated an old nixpkgs closure at every boot/04:00 and kept
+  # two full sets of packages (julia, rustc, zoom, ...) alive in the store.
+  # Update deliberately with scripts/update-nixos.sh instead.
 
   # Do NOT change after initial install — breaks stateful services.
   # To upgrade NixOS, update the nixpkgs input in flake.nix instead.

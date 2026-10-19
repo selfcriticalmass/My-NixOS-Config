@@ -62,7 +62,7 @@
     logseq
     pandoc
     sioyek
-    tesseract4
+    tesseract
     typst
     tinymist
     zotero
@@ -124,7 +124,7 @@
     wrangler
     repomix
     openconnect
-    protonvpn-gui
+    proton-vpn
     rclone
     slackdump
     wget

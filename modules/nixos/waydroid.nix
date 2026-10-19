@@ -1,14 +1,14 @@
-{ config, pkgs, lib, ... }:
+{ ... }:
 
 {
   virtualisation.waydroid.enable = true;
 
-  boot.kernelModules = [
-    "binder_linux"
-    "ashmem_linux"
-  ];
+  # Binder IPC is required by Waydroid. `ashmem_linux` was removed from the
+  # kernel (replaced by memfd_create) and no longer exists, so requesting it
+  # makes systemd-modules-load fail at boot.
+  boot.kernelModules = [ "binder_linux" ];
 
-  boot.kernelParams = [ "psi=1" ];
+  # `psi=1` is already set by the nixpkgs waydroid module.
 
   # After first rebuild: sudo waydroid init
   # Then: waydroid show-full-ui

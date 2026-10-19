@@ -1,6 +1,6 @@
-{ lib, python312, fetchFromGitHub }:
+{ lib, python3, fetchFromGitHub }:
 
-python312.pkgs.buildPythonPackage rec {
+python3.pkgs.buildPythonPackage rec {
   pname = "edge-tts";
   version = "7.0.2";
 
@@ -13,12 +13,12 @@ python312.pkgs.buildPythonPackage rec {
 
   format = "pyproject";
 
-  nativeBuildInputs = with python312.pkgs; [
+  nativeBuildInputs = with python3.pkgs; [
     setuptools
     wheel
   ];
 
-  propagatedBuildInputs = with python312.pkgs; [
+  propagatedBuildInputs = with python3.pkgs; [
     aiohttp
     certifi
     srt

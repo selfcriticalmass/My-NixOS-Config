@@ -1,28 +1,24 @@
-# Determinate Nix manages /etc/nix/nix.conf itself.
-# Custom settings go in /etc/nix/nix.custom.conf, managed declaratively here.
-# The standard `nix.*` module options below still apply — the Determinate
-# module redirects their generated output into nix.custom.conf, which
-# determinate-nixd includes from its managed nix.conf.
-{ config, lib, ... }:
+# Determinate Nix manages /etc/nix/nix.conf itself and redirects the standard
+# NixOS-generated nix.conf to /etc/nix/nix.custom.conf (via
+# `environment.etc."nix/nix.conf".target`). Do NOT declare
+# `environment.etc."nix/nix.custom.conf"` here — it collides with that target
+# and the content is silently discarded. Use `nix.settings.*` instead; those
+# end up in the generated nix.custom.conf.
+{ ... }:
 
 {
   nix = {
-    settings.auto-optimise-store = true;
+    settings = {
+      auto-optimise-store = true;
+
+      # Parallel evaluation: 0 = use all available cores
+      eval-cores = 0;
+    };
 
     gc = {
       automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
+      dates = "daily";
+      options = "--delete-older-than 3d";
     };
-  };
-
-  environment.etc."nix/nix.custom.conf" = {
-    text = ''
-      # Managed by NixOS (modules/nixos/determinate.nix) — do not edit manually.
-
-      # Parallel evaluation: 0 = use all available cores
-      eval-cores = 0
-    '';
-    mode = "0644";
   };
 }

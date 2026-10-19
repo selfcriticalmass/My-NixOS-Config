@@ -35,15 +35,21 @@
         ];
       };
 
-    pkgs = import nixpkgs {
+      nixpkgsConfig = {
+        allowUnfree = true;
+        permittedInsecurePackages = [
+          # Required by logseq.
+          "electron-39.8.10"
+          # Zotero bundles this Firefox ESR, which nixpkgs marks insecure as of
+          # 2026-10-13 (EOL). Drop once zotero ships a newer ESR.
+          "firefox-esr-140-bin-unwrapped-140.17.0esr"
+        ];
+      };
+
+      pkgs = import nixpkgs {
         inherit system;
         overlays = [ customOverlay ];
-        config = {
-          allowUnfree = true;
-          permittedInsecurePackages = [
-            "electron-39.8.10"
-          ];
-        };
+        config = nixpkgsConfig;
       };
 
     in
@@ -59,16 +65,11 @@
           # Must be first to properly configure Nix
           determinate.nixosModules.default
 
-          ({ pkgs, ... }: {
+          ({ ... }: {
             nixpkgs = {
               hostPlatform = system;
               overlays = [ customOverlay ];
-              config = {
-                allowUnfree = true;
-                permittedInsecurePackages = [
-                  "electron-39.8.10"
-                ];
-              };
+              config = nixpkgsConfig;
             };
           })
 

@@ -1,10 +1,12 @@
 { lib, stdenv, fetchurl, unzip, makeWrapper, jre }:
 
 stdenv.mkDerivation {
-  pname = "snptools";
-  version = "5.4";
+  pname = "snpeff";
+  version = "5.4C";
 
   src = fetchurl {
+    # `latest` is the only published URL for the 5.4 line; the hash below pins
+    # the exact artifact. Bump version + hash when upstream refreshes it.
     url = "https://snpeff-public.s3.amazonaws.com/versions/snpEff_latest_core.zip";
     sha256 = "0cyz1bqfj7qv2qwkzmkjsjky1lfkq64g11rk8gayprrrz7hs21iv";
   };
