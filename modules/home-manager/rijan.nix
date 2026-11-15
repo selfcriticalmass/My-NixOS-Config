@@ -128,6 +128,8 @@
     rclone
     slackdump
     wget
+    ipset
+    blocky
 
     # Desktop
     anki-bin
