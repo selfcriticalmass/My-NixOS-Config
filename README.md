@@ -32,7 +32,6 @@ Use [nix-update](https://github.com/Mic92/nix-update) to bump them automatically
 
 | Package | Source | Auto-update? |
 |---|---|---|
-| `ferrite` | GitHub (OlaProeis/Ferrite) | ✅ Fully automatic |
 | `edge-tts` | GitHub (rany2/edge-tts) | ✅ Fully automatic |
 | `mzmine` | GitHub release (mzmine/mzmine) | ⚠️ Semi-auto (uses `--url` hint) |
 | `plink2` | S3 | ❌ Fully manual |

@@ -31,6 +31,7 @@
     brave
     firefox
     vivaldi
+    chromium
     tor-browser
 
     # Communication

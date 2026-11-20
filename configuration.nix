@@ -17,6 +17,8 @@
     # Applications
     ./modules/nixos/postgres.nix
     ./modules/nixos/waydroid.nix
+
+    ./modules/nixos/blocky.nix
   ];
 
   programs.nix-ld.enable = true;
@@ -38,7 +40,6 @@
     mzmine
     snpeff
     edge-tts
-    ferrite
   ];
 
   # system.autoUpgrade is intentionally disabled. It rebuilt from the flake
